@@ -1,0 +1,8 @@
+tasks:
+          - name: deploying war into tomcat server
+            copy:
+                    src: /home/vagrant/jenkins/workspace/project_pipeline/project_pipeline_package/target/addressbook-2.0.war
+                    src: /var/lib/jenkins/workspace/project_pipeline/project_pipeline_package/target/addressbook-2.0.war
+                    dest: /usr/local/latest/webapps
+                    remote_src: yes
+            become: yes
