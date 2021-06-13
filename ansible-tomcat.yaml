@@ -1,8 +1,25 @@
 ---
+- hosts: localhost
   become: yes
   tasks:
+          - name: Getting apt update
+            apt:
+                    update_cache=yes
+
+          - name: Installing Java
+            apt:
+                    name: openjdk-11-jdk
+                    state: present
+          - name: Downloading Tomcat
+            get_url:
+                    url: https://mirrors.estointernet.in/apache/tomcat/tomcat-8/v8.5.66/bin/apache-tomcat-8.5.66.tar.gz
+                    dest: /usr/local
+          - name: Extracting Tomcat
+            unarchive:
+                    src: "/usr/local/apache-tomcat-8.5.66.tar.gz"
+                    dest: /usr/local
+                    remote_src: yes
           - name: Copying war file
             command: cp /var/tmp/workspace/Ansible_pipeline/ansible_package_phase/target/addressbook-2.0.war /usr/local/latest/webapps/
           - name: Starting Tomcat
             command: sh /usr/local/latest/bin/startup.sh
-            become: yes
